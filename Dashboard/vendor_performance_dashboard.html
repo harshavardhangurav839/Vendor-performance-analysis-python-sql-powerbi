@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Vendor Performance Dashboard</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #f0ede8;
+    --surface: #faf9f7;
+    --surface2: #f4f2ee;
+    --border: rgba(0,0,0,0.09);
+    --text: #1a1917;
+    --muted: #6b6a65;
+    --accent: #1D9E75;
+    --danger: #D85A30;
+    --purple: #3B2F7F;
+    --navy: #2A6EAA;
+    --teal: #1E8C8C;
+    --green: #2D9C7A;
+    --amber: #FAC775;
+    --radius: 12px;
+    --radius-sm: 8px;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 1.5rem;
+  }
+
+  .dashboard {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  .dash-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.25rem;
+    position: relative;
+  }
+
+  .dash-title {
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: -0.01em;
+    text-align: center;
+  }
+
+  .dash-subtitle {
+    font-size: 13px;
+    color: var(--muted);
+    text-align: center;
+    margin-top: 2px;
+  }
+
+  /* KPI Cards */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    margin-bottom: 1rem;
+  }
+
+  .kpi-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 1rem 1.25rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .kpi-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+
+  .kpi-card.sales::before { background: var(--purple); }
+  .kpi-card.purchase::before { background: var(--navy); }
+  .kpi-card.profit::before { background: var(--accent); }
+  .kpi-card.margin::before { background: var(--teal); }
+  .kpi-card.unsold::before { background: var(--danger); }
+
+  .kpi-label {
+    font-size: 11px;
+    color: var(--muted);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 6px;
+  }
+
+  .kpi-value {
+    font-family: 'DM Mono', monospace;
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  .kpi-value.green { color: var(--accent); }
+  .kpi-value.red { color: var(--danger); }
+
+  .kpi-sub {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 3px;
+  }
+
+  /* Panels */
+  .panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1rem 1.25rem;
+  }
+
+  .panel-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 12px;
+    text-align: center;
+    letter-spacing: 0.01em;
+  }
+
+  /* Layout rows */
+  .row-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  .row-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .chart-wrap { position: relative; width: 100%; }
+  .donut-wrap { position: relative; width: 100%; height: 260px; }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 1.5rem;
+    opacity: 0.6;
+  }
+</style>
+</head>
+<body>
+
+<div class="dashboard">
+
+  <div class="dash-header">
+    <div>
+      <div class="dash-title">Vendor Performance Dashboard</div>
+      <div class="dash-subtitle">Company-level vendor & brand analytics overview</div>
+    </div>
+  </div>
+
+  <!-- KPI Row -->
+  <div class="kpi-grid">
+    <div class="kpi-card sales">
+      <div class="kpi-label">Total Sales ($)</div>
+      <div class="kpi-value">441.41M</div>
+      <div class="kpi-sub">Gross revenue</div>
+    </div>
+    <div class="kpi-card purchase">
+      <div class="kpi-label">Total Purchase ($)</div>
+      <div class="kpi-value">307.34M</div>
+      <div class="kpi-sub">Cost of goods</div>
+    </div>
+    <div class="kpi-card profit">
+      <div class="kpi-label">Gross Profit ($)</div>
+      <div class="kpi-value green">134.07M</div>
+      <div class="kpi-sub">Net of COGS</div>
+    </div>
+    <div class="kpi-card margin">
+      <div class="kpi-label">Profit Margin (%)</div>
+      <div class="kpi-value green">38.7%</div>
+      <div class="kpi-sub">Overall margin</div>
+    </div>
+    <div class="kpi-card unsold">
+      <div class="kpi-label">Unsold Capital ($)</div>
+      <div class="kpi-value red">2.71M</div>
+      <div class="kpi-sub">Inventory tied up</div>
+    </div>
+  </div>
+
+  <!-- Top Row: Donut + Vendor Bar + Brand Bar -->
+  <div class="row-3">
+    <div class="panel">
+      <div class="panel-title">Purchase Contribution</div>
+      <div class="donut-wrap">
+        <canvas id="donutChart" role="img" aria-label="Donut chart showing purchase contribution. Diageo leads at 16.3%. Cumulative 65.69%.">Purchase contribution by vendor.</canvas>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-title">Top Vendors by Sales</div>
+      <div class="chart-wrap" style="height:260px">
+        <canvas id="vendorChart" role="img" aria-label="Horizontal bar chart top 10 vendors by sales. Diageo leads at 67.99M.">Top vendors.</canvas>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-title">Top Brands by Sales</div>
+      <div class="chart-wrap" style="height:260px">
+        <canvas id="brandChart" role="img" aria-label="Horizontal bar chart top 10 brands by sales. Jack Daniels No7 leads at 7.96M.">Top brands.</canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Row: Low Performing -->
+  <div class="row-2">
+    <div class="panel">
+      <div class="panel-title">Low Performing Vendors</div>
+      <div class="chart-wrap" style="height:200px">
+        <canvas id="lowVendorChart" role="img" aria-label="Horizontal bar chart low performing vendors.">Low performing vendors.</canvas>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-title">Top 10 Low Performing Brands</div>
+      <div class="chart-wrap" style="height:200px">
+        <canvas id="lowBrandChart" role="img" aria-label="Horizontal bar chart low performing brands.">Low performing brands.</canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">Vendor Performance Dashboard &nbsp;·&nbsp; Data sourced from uploaded charts</div>
+</div>
+
+<script>
+const textColor = '#1a1917';
+const mutedColor = '#6b6a65';
+const gridColor = 'rgba(0,0,0,0.06)';
+
+/* ── DONUT ── */
+const donutColors = ['#3B2F7F','#3D4E99','#2A6EAA','#2A7DAB','#1E8C8C','#1A8C75','#1A7A5E','#2D9C7A','#5DC490','#65b89a'];
+const donutLabels = ['Diageo','Martignetti','Pernod Ricard','Jim Beam','Bacardi','Constellation','Brown-Forman','E&J Gallo','Ultra Bev','M S Walker'];
+const donutVals   = [16.3, 8.3, 7.76, 7.64, 5.67, 4.97, 4.31, 3.93, 3.63, 3.18];
+const cumTotal    = donutVals.reduce((a,b)=>a+b,0).toFixed(2);
+
+const centerPlugin = {
+  id: 'center',
+  beforeDraw(chart) {
+    const {ctx, chartArea} = chart;
+    if (!chartArea) return;
+    const cx = (chartArea.left + chartArea.right) / 2;
+    const cy = (chartArea.top + chartArea.bottom) / 2;
+    ctx.save();
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillStyle = textColor; ctx.font = "600 20px 'DM Mono', monospace";
+    ctx.fillText(cumTotal + '%', cx, cy - 9);
+    ctx.font = "400 10px 'DM Sans', sans-serif"; ctx.fillStyle = mutedColor;
+    ctx.fillText('Cumulative', cx, cy + 11);
+    ctx.restore();
+  }
+};
+
+const outerLabelPlugin = {
+  id: 'outerLabels',
+  afterDraw(chart) {
+    const {ctx, chartArea} = chart;
+    if (!chartArea) return;
+    const meta = chart.getDatasetMeta(0);
+    const cx = (chartArea.left + chartArea.right) / 2;
+    const cy = (chartArea.top + chartArea.bottom) / 2;
+    const outerR = meta.data[0] ? meta.data[0].outerRadius : 90;
+    ctx.save();
+    meta.data.forEach((arc, i) => {
+      const mid = (arc.startAngle + arc.endAngle) / 2;
+      const sin = Math.sin(mid), cos = Math.cos(mid);
+      const r1 = outerR + 6, r2 = outerR + 20;
+      const x1 = cx + cos*r1, y1 = cy + sin*r1;
+      const x2 = cx + cos*r2, y2 = cy + sin*r2;
+      const isRight = cos >= 0;
+      const lx = cx + cos*(r2+4);
+      ctx.strokeStyle = donutColors[i]; ctx.lineWidth = 1.2;
+      ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2); ctx.lineTo(lx,y2); ctx.stroke();
+      ctx.fillStyle = donutColors[i]; ctx.beginPath(); ctx.arc(x1,y1,2,0,Math.PI*2); ctx.fill();
+      const tx = isRight ? lx+4 : lx-4;
+      ctx.textAlign = isRight ? 'left' : 'right';
+      ctx.font = "500 9px 'DM Sans', sans-serif"; ctx.fillStyle = textColor;
+      ctx.fillText(donutLabels[i], tx, y2-6);
+      ctx.font = "400 9px 'DM Sans', sans-serif"; ctx.fillStyle = donutColors[i];
+      ctx.fillText(donutVals[i]+'%', tx, y2+5);
+    });
+    ctx.restore();
+  }
+};
+
+new Chart(document.getElementById('donutChart'), {
+  type: 'doughnut',
+  data: { labels: donutLabels, datasets: [{ data: donutVals, backgroundColor: donutColors, borderColor: '#faf9f7', borderWidth: 2, hoverOffset: 6 }] },
+  options: { responsive:true, maintainAspectRatio:false, cutout:'58%',
+    layout:{ padding:{ top:34, bottom:34, left:60, right:60 } },
+    plugins:{ legend:{ display:false }, tooltip:{ callbacks:{ label: c => ` ${c.label}: ${c.parsed}%` } } }
+  },
+  plugins: [centerPlugin, outerLabelPlugin]
+});
+
+/* ── TOP VENDORS ── */
+new Chart(document.getElementById('vendorChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Diageo NA','Martignetti','Pernod Ricard','Jim Beam','Bacardi USA','Constellation','E&J Gallo','Brown-Forman','Ultra Bev','M S Walker'],
+    datasets: [{ data:[67.99,39.33,32.06,31.42,24.85,24.22,18.40,18.25,16.50,14.71],
+      backgroundColor:['#3B2F7F','#3D4E99','#2A6EAA','#2A7DAB','#1E8C8C','#1A8C75','#1A7A5E','#2D9C7A','#5DC490','#65b89a'],
+      borderRadius:3, borderSkipped:false }]
+  },
+  options:{ indexAxis:'y', responsive:true, maintainAspectRatio:false,
+    plugins:{ legend:{ display:false }, tooltip:{ callbacks:{ label: c=>` $${c.parsed.x}M` } } },
+    scales:{
+      x:{ grid:{ color:gridColor }, ticks:{ color:mutedColor, font:{size:9}, callback: v=>'$'+v+'M' } },
+      y:{ grid:{ display:false }, ticks:{ color:textColor, font:{size:9} } }
+    }
+  }
+});
+
+/* ── TOP BRANDS ── */
+new Chart(document.getElementById('brandChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Jack Daniels No7','Tito\'s Vodka','Grey Goose','Capt Morgan Rum','Absolut 80','Jameson Whiskey','Ketel One','Baileys Irish','Kahlua','Tanqueray'],
+    datasets: [{ data:[7.96,7.40,7.21,6.36,6.24,5.72,5.07,4.15,3.60,3.46],
+      backgroundColor:['#2C1654','#3B2181','#5B2D8E','#7B3FA0','#9C3F8C','#B84C7A','#C96A6A','#D48A72','#DBA882','#E8C99A'],
+      borderRadius:3, borderSkipped:false }]
+  },
+  options:{ indexAxis:'y', responsive:true, maintainAspectRatio:false,
+    plugins:{ legend:{ display:false }, tooltip:{ callbacks:{ label: c=>` $${c.parsed.x}M` } } },
+    scales:{
+      x:{ grid:{ color:gridColor }, ticks:{ color:mutedColor, font:{size:9}, callback: v=>'$'+v+'M' } },
+      y:{ grid:{ display:false }, ticks:{ color:textColor, font:{size:9} } }
+    }
+  }
+});
+
+/* ── LOW VENDORS ── */
+new Chart(document.getElementById('lowVendorChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Haunting Whisper','Black Rock Spirits','American Spirits','Adamba Imports','Uncorked'],
+    datasets: [{ data:[7390,2100,1480,680,130], backgroundColor:'#FAC775', borderRadius:3, borderSkipped:false }]
+  },
+  options:{ indexAxis:'y', responsive:true, maintainAspectRatio:false,
+    plugins:{ legend:{ display:false }, tooltip:{ callbacks:{ label: c=>` $${c.parsed.x}` } } },
+    scales:{
+      x:{ grid:{ color:gridColor }, ticks:{ color:mutedColor, font:{size:9} } },
+      y:{ grid:{ display:false }, ticks:{ color:textColor, font:{size:9} } }
+    }
+  }
+});
+
+/* ── LOW BRANDS ── */
+new Chart(document.getElementById('lowBrandChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Pepe Lopez Gold','Liberty Creek Merlot','La Joya Svgn Blanc','Newman\'s Own Red','Concannon Chard','Sileni Nano Pnt','LiDestri Bloody Mary','SS Pierce Ninety Nine','Ezra Brooks Bourbon','Mas Belles Eaux'],
+    datasets: [{ data:[100,85,83,80,78,75,72,66,58,50], backgroundColor:'#FAC775', borderRadius:3, borderSkipped:false }]
+  },
+  options:{ indexAxis:'y', responsive:true, maintainAspectRatio:false,
+    plugins:{ legend:{ display:false }, tooltip:{ callbacks:{ label: c=>` $${c.parsed.x}` } } },
+    scales:{
+      x:{ grid:{ color:gridColor }, ticks:{ color:mutedColor, font:{size:9} } },
+      y:{ grid:{ display:false }, ticks:{ color:textColor, font:{size:9} } }
+    }
+  }
+});
+</script>
+</body>
+</html>
