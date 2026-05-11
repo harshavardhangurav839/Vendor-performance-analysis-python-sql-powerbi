@@ -1,207 +1,222 @@
-# Vendor performance analysis :Retail inventory & sales
+# Vendor Performance Analysis : Retail Inventory & Sales
 
-_ Analyzing vendor efficiency and profitability to support strategic purchasing and inventory decisions using SQL,Python and Power BI.
----
-## Table of contents 
-- <a herf="#Overview"> Overview</a>
-- <a href="#problem-statement">Problem Statement</a>
-- <a href="#dataset">Dataset</a>
-- <a href="#tools--technologies">Tools & Technologies</a>
-- <a href="methods">Methods</a>
-- <a href="#data-cleaning--preparation">Data cleaning & preparation</a>
-- <a href="#exploratary-data-analysis">Exploratary data analysis</a>
-- <a href="#key-insights">Key Insights</a>
-- <a href="#dashboard">Dashboard</a>
-- <a href="#project-structure">Project structure</a>
-- <a href="how-to-run-this-project">How to run this project</a>
-- <a href="#final-recommendation">Final recommendation</a>
-- <a href="#author--contact">Author & Contact</a>
+> Analyzing vendor efficiency and profitability to support strategic purchasing and inventory decisions using SQL, Python and Power BI.
 
 ---
-<h2> <a  class="anchor" id="Overview" <> /a> Overview </h2>
 
-This project evaluates vendor performance and retail inventory dynamics to drive strategic insights for purchasing, pricing 
-and inventory optimization. A complete data pipeline was built using SQL for ETL ,Python for analysis and hypothesis testing and 
-Power BI for data visualization.
+## Table of Contents
 
----
-<h2> <a  class="anchor" id="problem-statement" <> /a> Problem Statement </h2>
-
-Effective inventory and sales management are critical in the retail sector .This reject aim to:
--Identify underperforming brands needs pricing and promotional adjustments
--Determine vendor contributions to sales and profit
--Analyze the cost-benefit of bulk purchasing 
--Investigate inventory turnover inefficiencies 
--Statistically validate differences in vendor profitability
-
----
-<h2> <a  class="anchor" id="dataset" <> /a> Dataset </h2>
-
--Multiple CSV files is loaded in  '/Data/' folder (sales,purchase,vendors,inventory)
--Summary table is created from ingested data and used for analytics
+- [Overview](#overview)
+- [Problem Statement](#problem-statement)
+- [Dataset](#dataset)
+- [Tools & Technologies](#tools--technologies)
+- [Methods](#methods)
+- [Data Cleaning & Preparation](#data-cleaning--preparation)
+- [Exploratory Data Analysis](#exploratory-data-analysis)
+- [Key Insights](#key-insights)
+- [Dashboard](#dashboard)
+- [Project Structure](#project-structure)
+- [How to Run This Project](#how-to-run-this-project)
+- [Final Recommendations](#final-recommendations)
+- [Author & Contact](#author--contact)
 
 ---
-<h2> <a  class="anchor" id="tools--technologies" <> /a> Tools & Technologies </h2>
 
--SQL(Joins, filters, Common table  )
--Python(big data ingesting in database, Visualization modules like mathplot, seaborn,Pandas)
--Power BI(Interactive visualization)
--Github
+## Overview
+
+This project evaluates vendor performance and retail inventory dynamics to drive strategic insights for purchasing, pricing and inventory optimization. A complete data pipeline was built using SQL for ETL, Python for analysis and hypothesis testing, and Power BI for data visualization.
 
 ---
-<h2> <a  class="anchor" id="methods" <> /a> Methods </h2>
 
--Data get ingested in sqlite database 
--In EDA, the unwanted files and data from files got removed by data cleaning process.
--Final file "Vendor_invoice_summary" is formed on which further analysis is done
--Using modules matplot and seaborn various charts like scatterplot, histogram,barplot,pie chart,heatmap is drawn
--Analysis is done by filtering using numerical variables like profit margin,gross profit, total sales dollars.
--Then we find out top vendors and brands count, purchase contribution of vendors,low performing vendors and brands,
-top vendors by sale performance,impact of bulk purchasing on unit price , low inventory turnover, Unsold inventory.
+## Problem Statement
 
----
-<h2> <a  class="anchor" id="data-cleaning--preparation" <> /a> Data cleaning & preparation </h2>
+Effective inventory and sales management are critical in the retail sector. This project aims to:
 
--Filter data with:
-  -Gross profit< 0
-  -Profit margin <0
-  -Sales quantity =0
--Created summary table name as vendor_invoice_summary to make analysis on it.
+- Identify underperforming brands that need pricing and promotional adjustments
+- Determine vendor contributions to sales and profit
+- Analyze the cost-benefit of bulk purchasing
+- Investigate inventory turnover inefficiencies
+- Statistically validate differences in vendor profitability
 
 ---
-<h2> <a  class="anchor" id="exploratary-data-analysis" <> /a> Exploratary data analysis </h2>
 
-**Negative or zero values detected**
-- Gross Profit: Loss making sales (Min -52000)
--Profit margin: Sales at zero or below cost 
--Unsold Inventory: Indicating slow-moving stock
+## Dataset
 
-**Outliers Identified**
--High freight costs(Upto 257K)
--Large purchase 
-
-**Coorelation analysis**
--Heatmap coorelation Insights:strong relation between the totla sales dollars and total purchase dollars with the gross profit
--Negative between sales price and profit margin
-
+- Multiple CSV files loaded in `/Data/` folder (sales, purchase, vendors, inventory)
+- A summary table is created from ingested data and used for analytics
 
 ---
-<h2> <a  class="anchor" id="key-insights" <> /a> Key Insights </h2>
 
--**Heatmap coorelation Insights**:strong relation between the totla sales dollars and total purchase dollars with the gross profit
--**Purchase contribution** of top 10 vendors is 65.69%
--**Bulk purchasing impact**:72% cost saving per units in large order so it reduces the average unit purchase price
--**Vendor performance** Low performing vendors with higher profit margin and low sales volume potentially due to premium pricing or lower operational costs
--**Hypothesis testing**:There is significant difference in profit margins between top and low sales vendors find out through hypothesis testing.
+## Tools & Technologies
 
----
-<h2> <a  class="anchor" id="dashboard" <> /a> Dashboard </h2>
-
--Power BI dashboard shows:
-  -Purchase contribution
-  -Top vendors for sales
-  -Top brands for sales
-  -Low performing vendors
-  -Top 10 low performing brands
-  -
-
-
-![alt text](<Screenshot (11).png>)
-![alt text](<Screenshot (12).png>)
+- **SQL** — Joins, filters, Common Table Expressions (CTEs)
+- **Python** — Big data ingestion into database; visualization using Matplotlib, Seaborn, Pandas
+- **Power BI** — Interactive dashboards and visualizations
+- **GitHub** — Version control and project hosting
 
 ---
-<h2> <a  class="anchor" id="project-structure" <> /a Project structure </h2>
 
+## Methods
 
+- Data is ingested into an SQLite database
+- Unwanted files and erroneous records are removed during the data cleaning process
+- Final summary file `vendor_invoice_summary` is created for all further analysis
+- Using Matplotlib and Seaborn, various charts are drawn: scatter plot, histogram, bar plot, pie chart, heatmap
+- Analysis is performed by filtering on numerical variables such as profit margin, gross profit, and total sales dollars
+- Key findings derived:
+  - Top vendors and brand counts
+  - Purchase contribution of vendors
+  - Low-performing vendors and brands
+  - Top vendors by sales performance
+  - Impact of bulk purchasing on unit price
+  - Low inventory turnover products
+  - Unsold inventory items
 
-```bash
+---
+
+## Data Cleaning & Preparation
+
+Records were filtered and removed based on the following conditions:
+
+- Gross Profit < 0
+- Profit Margin < 0
+- Sales Quantity = 0
+
+A consolidated summary table named `vendor_invoice_summary` was created for downstream analysis.
+
+---
+
+## Exploratory Data Analysis
+
+**Negative or Zero Values Detected:**
+
+- **Gross Profit:** Loss-making sales detected (Min: −52,000)
+- **Profit Margin:** Sales at zero or below cost
+- **Unsold Inventory:** Indicating slow-moving stock
+
+**Outliers Identified:**
+
+- High freight costs (up to 257K)
+- Unusually large purchase quantities
+
+**Correlation Analysis:**
+
+- **Heatmap Insights:** Strong positive correlation between total sales dollars, total purchase dollars, and gross profit
+- **Negative Correlation:** Between sales price and profit margin
+
+---
+
+## Key Insights
+
+- **Heatmap Correlation:** Strong relation between total sales dollars and total purchase dollars with gross profit
+- **Purchase Contribution:** Top 10 vendors account for 65.69% of total purchases
+- **Bulk Purchasing Impact:** 72% cost saving per unit on large orders, reducing the average unit purchase price significantly
+- **Vendor Performance:** Low-performing vendors show higher profit margins but low sales volume — potentially due to premium pricing or lower operational costs
+- **Hypothesis Testing:** A statistically significant difference in profit margins exists between top and low sales vendors
+
+---
+
+## Dashboard
+
+Power BI dashboard covers:
+
+- Purchase contribution by vendor
+- Top vendors by sales
+- Top brands by sales
+- Low-performing vendors
+- Top 10 low-performing brands
+
+![Dashboard Screenshot 1](<c:\Vendor project\Images\Dashboard_overview_1.png>)
+![Dashboard Screenshot 2](<c:\Vendor project\Images\Dashboard_overview_2.png>)
+
+---
+
+## Project Structure
+
+```
 vendor-performance-analysis/
-
+│
 │── README.md
 │── .gitignore
 │── requirements.txt
 │── Vendor Performance Report.pdf
-
 │
-├── notebooks/                     # Jupyter notebooks
+├── notebooks/                        # Jupyter notebooks
 │   ├── exploratory_data_analysis.ipynb
 │   └── vendor_performance_analysis.ipynb
-
 │
-├── scripts/                       # Python scripts for processing
+├── scripts/                          # Python scripts for processing
 │   ├── ingestion_db.py
 │   └── get_vendor_summary.py
-
 │
-├── dashboard/                     # Power BI dashboard files
+├── dashboard/                        # Power BI dashboard files
 │   └── vendor_performance_dashboard.pbix
-
 │
-├── dataset/                       # Raw and cleaned datasets
+├── dataset/                          # Raw and cleaned datasets
 │   ├── raw_data.csv
 │   └── cleaned_data.csv
-
 │
-└── images/                        # Dashboard screenshots
+└── images/                           # Dashboard screenshots
     └── dashboard_preview.png
 ```
 
 ---
-<h2> <a  class="anchor" id="how-to-run-this-project"<> /a How to run this project </h2>
 
 ## How to Run This Project
 
-1. Clone the repository:
+**1. Clone the repository:**
 
 ```bash
 git clone https://github.com/yourusername/vendor-performance-analysis.git
 ```
 
-2. Install required libraries:
+**2. Install required libraries:**
 
 ```bash
 pip install -r requirements.txt
 ```
 
-3. Load the CSVs and ingest into database:
+**3. Load the CSVs and ingest into database:**
 
 ```bash
 python scripts/ingestion_db.py
 ```
 
-4. Create vendor summary table:
+**4. Create the vendor summary table:**
 
 ```bash
 python scripts/get_vendor_summary.py
 ```
 
-5. Open and run notebooks:
+**5. Open and run the notebooks in order:**
 
-- notebooks/Ingesting_data.ipynb
-- notebooks/Exploratory_data_analysis.ipynb
-- notebooks/Data_visualization.ipynb
+```
+notebooks/Ingesting_data.ipynb
+notebooks/Exploratory_data_analysis.ipynb
+notebooks/Data_visualization.ipynb
+```
 
-6. Open Power BI Dashboard:
+**6. Open Power BI Dashboard:**
 
-- dashboard/vendor_performance_dashboard.pbix
-
-
-
----
-<h2> <a  class="anchor" id="final-recommendation"<> /a Final recommendation </h2>
-
--Diversify vendor base to reduce risk
--Optimize bulk order strategies
--Reprice slow moving, high margin brands
--Clear unsold inventory strategically
--Improve marketing for underperforming vendors
+```
+dashboard/vendor_performance_dashboard.pbix
+```
 
 ---
-<h2> <a  class="anchor" id="author--contact"<> /a Author & Contact </h2>
+
+## Final Recommendations
+
+- **Diversify vendor base** to reduce concentration risk
+- **Optimize bulk order strategies** to maximize the 72% unit cost saving
+- **Reprice slow-moving, high-margin brands** to stimulate sales volume
+- **Clear unsold inventory strategically** through promotions or markdowns
+- **Improve marketing support** for underperforming vendors to lift sales
+
+---
+
+## Author & Contact
 
 **Harshavardhan Gurav**
--Email:harshavardhangurav839@gmail.com
--Linkdedin:[]
 
-
-
+- 📧 Email: harshavardhangurav839@gmail.com
+- 💼 LinkedIn: *(https://www.linkedin.com/public-profile/settings/?trk=d_flagship3_profile_self_view_public_profile&lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base%3BC1xHp%2BfySayj%2BmXJdJ8sDw%3D%3D)*
