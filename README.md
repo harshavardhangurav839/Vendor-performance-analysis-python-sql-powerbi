@@ -219,4 +219,4 @@ dashboard/vendor_performance_dashboard.pbix
 **Harshavardhan Gurav**
 
 - 📧 Email: harshavardhangurav839@gmail.com
-- 💼 LinkedIn: *(https://www.linkedin.com/public-profile/settings/?trk=d_flagship3_profile_self_view_public_profile&lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base%3BC1xHp%2BfySayj%2BmXJdJ8sDw%3D%3D)*
+- 💼 LinkedIn: *(https://www.linkedin.com/in/harshavardhan-gurav-a2ba0a20a?utm_source=share_via&utm_content=profile&utm_medium=member_android)*
