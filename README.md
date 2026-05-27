@@ -1,7 +1,7 @@
 # Vendor Performance Analysis : Retail Inventory & Sales
 
-> Most retail businesses know which vendors they buy from. Very few know which vendors are actually worth buying from — and which ones are quietly draining profit through slow-moving stock, inflated unit costs, and underperforming brands.
-This project answers that question. By building a full data pipeline across sales, purchase, vendor, and inventory data, it identifies exactly where money is being made, where it is being lost, and where bulk purchasing can cut unit costs by up to 72% — with a Power BI dashboard that makes the findings accessible to anyone in the business without touching a spreadsheet.
+> Most retail businesses know which vendors they buy from but very few know which vendors are actually worth buying from  and which ones are quietly draining profit through slow-moving stock, inflated unit costs, and underperforming brands.
+This project answers that question by building a full data pipeline across sales, purchase, vendor and inventory data, it identifies exactly where money is being made, where it is being lost, and where bulk purchasing can cut unit costs by up to 72%  with a Power BI dashboard that makes the findings accessible to anyone in the business without touching a spreadsheet.
 ---
 
 ## Table of Contents
